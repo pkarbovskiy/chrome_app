@@ -1,5 +1,15 @@
 {
-    "manifest_version": 3,
-    "name": "My Extension",
+    "manifest_version": 2,
+    "name": "Lole managment",
+    "permissions": ["storage", "*//localhost:3000/*", "tabs" ],
+    "browser_action": {
+        "default_popup": "public/index.html"
+    },
+    "content_scripts": [{
+        "matches":["https://lole-ca-en.myshopify.com/admin/collections/*"],
+        "run_at": "document_idle",
+        "all_frames": true,
+        "js":["public/build/injection.js"]
+    }],
     "version": "1.0.0"
-  }
+}
