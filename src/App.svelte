@@ -295,8 +295,8 @@ document.getElementById('save').addEventListener('click',
     <aside class="aside">
         <Navigation 
             {switchTab}
-            tab=tab
-            tabsToShow=TABS
+            tab={tab}
+            tabsToShow={TABS.split(',')}
         />
     </aside>
     {#if tab === 'product' }

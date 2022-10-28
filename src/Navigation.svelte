@@ -2,27 +2,76 @@
     export let tab
     export let switchTab
     export let tabsToShow
+    function capitalize(name) {
+        return `${name.charAt(0).toUpperCase()}${name.slice(1)}`
+    }
 </script>
 
 <ul class="nav">
-    <li class="item {tab === "activity"? "active" : ""}" on:click={() => switchTab("activity")}>
-        <i class="activity" id="activity"></i>
-        <label for="activity" class="nav-label">Activity</label>
+    {#each tabsToShow as oneTab}
+    <li class="item {tab === oneTab? "active" : ""}" on:click={() => switchTab(oneTab)}>
+        <i class="{oneTab}" id="{oneTab}"></i>
+        <label for="{oneTab}" class="nav-label">{capitalize(oneTab)}</label>
     </li>
-    <li class="item {tab === "product"? "active" : ""}" on:click={() => switchTab("product")}>
-        <i class="product" id="product"></i>
-        <label for="product" class="nav-label">Products</label>                
-    </li>
-    <li class="item {tab === "nav"? "active" : ""}" on:click={() => switchTab("nav")}>
-        <i class="erp" id="navIcon"></i>
-        <label for="navIcon" class="nav-label">Nav</label>
-    </li>
-    <li class="item {tab === "logs"? "active" : ""}" on:click={() => switchTab("logs")}>
-        <i class="logs" id="navIcon"></i>
-        <label for="navIcon" class="nav-label">Logs</label>
-    </li>
-    <li class="item {tab === "settings"? "active" : ""}" on:click={() => switchTab("settings")}>
-        <i class="settings" id="settings"></i>
-        <label for="settings" class="nav-label">Settings</label>
-    </li>
+    {/each}
 </ul>
+<style>
+    .nav-label {
+	    font-size: 11px;
+    }   
+
+    ul.nav {
+        display:flex;
+        flex-flow: column;
+        justify-content: center;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    .nav .item {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        width: 100%;
+        padding-left: 2px;
+        box-sizing: border-box;
+    }
+    .nav .item:hover {
+        border-left: solid #ccc 4px;
+        padding-left: 0px;
+    }
+    .item.active {
+	    border-left: solid #fff 4px;
+        padding-left: 0px;
+    }
+    .item + .item {
+	    margin-top: 10px;
+    }
+    li.item label {
+        color: #fff;
+    }
+    .activity {
+    	background: no-repeat;
+    	background-image: url('../images/chart-line.svg');
+    }
+    .settings {
+    	background: no-repeat;
+    	background-image: url('../images/gear.svg');
+    }
+    .product {
+    	background: no-repeat;
+    	background-image: url('../images/list-ul.svg');
+    }
+    .logs {
+    	background: no-repeat;
+    	background-image: url('../images/list-check.svg');
+    }
+    .erp {
+    	background: no-repeat;
+    	background-image: url('../images/gears.svg');
+    }
+    .nav-input-field {
+    	width: 375px;
+        margin-right: 65px;
+    }
+</style>

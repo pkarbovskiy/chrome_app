@@ -154,28 +154,6 @@ aside {
 	margin-right: 268px;
 }
 
-.active, li.active {
-	border-left: solid #fff 4px;
-    padding-left: 0px;
-}
-
-.nav-label {
-	font-size: 11px;
-}
-
-ul.nav {
-	display:flex;
-	flex-flow: column;
-	justify-content: center;
-	width: 100%;
-	padding: 0;
-	margin: 0;
-}
-
-li {
-	list-style-type: none;
-}
-
 .list {
 	width: 100%;
 	padding: 5px 16px 5px;
@@ -189,51 +167,4 @@ li {
 
 .list li + .list li {
 	margin-top: 16px;
-}
-
-.nav li {
-	display: flex;
-	flex-flow: column;
-	align-items: center;
-	width: 100%;
-	padding-left: 2px;
-	box-sizing: border-box;
-}
-
-.nav li:hover {
-	border-left: solid #ccc 4px;
-	padding-left: 0px;
-}
-
- li.item + li.item {
-	margin-top: 10px;
-}
-
-li.item label {
-	color: #fff;
-}
-
-.activity {
-	background: no-repeat;
-	background-image: url('./images/chart-line.svg');
-}
-.settings {
-	background: no-repeat;
-	background-image: url('./images/gear.svg');
-}
-.product {
-	background: no-repeat;
-	background-image: url('./images/list-ul.svg');
-}
-.logs {
-	background: no-repeat;
-	background-image: url('./images/list-check.svg');
-}
-.erp {
-	background: no-repeat;
-	background-image: url('./images/gears.svg');
-}
-.nav-input-field {
-	width: 375px;
-    margin-right: 65px;
 }
