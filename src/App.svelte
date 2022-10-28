@@ -296,7 +296,7 @@ document.getElementById('save').addEventListener('click',
         <Navigation 
             {switchTab}
             tab=tab
-            tabsToShow=tabsToShow
+            tabsToShow=TABS
         />
     </aside>
     {#if tab === 'product' }
