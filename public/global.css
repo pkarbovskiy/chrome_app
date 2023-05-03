@@ -12,8 +12,6 @@ html, body {
 body {
 	margin: 0;
 	font-family: Roboto, system-ui, sans-serif;
-	/* background-color: #d0e1e9; */
-	/* background-color: #dfecf1; */
 	background-color: var(--primary-bg-color);
 	box-sizing: border-box;
 }
