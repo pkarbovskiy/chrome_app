@@ -11,30 +11,31 @@
 {/each}
 
 <!-- Render rows -->
-{#each rows as row}
+{#each rows as row, i}
     {#each headers as header}
-    <div class="grid-cell grid-row">{row[header]}</div>
+    <div class="grid-cell grid-row {i%2?"":"odd"}">{@html row[header]}</div>
     {/each}
 {/each}
 </div>
   
 <style>
     .grid-table {
+        --even-child-colour: #ccc;
         display: grid;
-        grid-template-columns: repeat(var(--columns-amount), 1fr);
-        grid-auto-rows: minmax(50px, auto);
-        grid-gap: 1px;
-        border: 1px solid black;
+        grid-template-columns: repeat(var(--columns-amount), minmax(max-content, 1fr));
+        grid-auto-rows: minmax(25px, auto);
+        box-sizing: border-box;
     }
-
+    .grid-cell.odd {
+        background-color: var(--even-child-colour);
+    }
     .grid-cell {
-        padding: 10px;
-        border: 1px solid black;
+        padding: 5px;
+        overflow-wrap: anywhere;
     }
 
     .grid-header {
         font-weight: bold;
-        background-color: #ccc;
     }
 </style>
   

@@ -1,10 +1,10 @@
-import svelte from 'rollup-plugin-svelte';
-import json from '@rollup/plugin-json';
 import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
 import resolve from '@rollup/plugin-node-resolve';
-import livereload from 'rollup-plugin-livereload';
-import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
+import livereload from 'rollup-plugin-livereload';
+import svelte from 'rollup-plugin-svelte';
+import { terser } from 'rollup-plugin-terser';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -82,6 +82,17 @@ export default [
             sourcemap: true,
             format: "iife",
             file: "public/build/injection.js",
+        },
+        plugins: [resolve(), commonjs(), json()],
+        watch: {
+            clearScreen: false,
+        },
+    }, {
+        input: "src/background.js",
+        output: {
+            sourcemap: true,
+            format: "iife",
+            file: "public/build/background.js",
         },
         plugins: [resolve(), commonjs(), json()],
         watch: {

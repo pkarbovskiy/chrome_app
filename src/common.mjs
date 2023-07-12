@@ -17,3 +17,15 @@ export async function get(url) {
         }
     })
 }
+
+export function roundThis(number, precition) {
+    return Math.round(
+        (number + Number.EPSILON) * Math.pow(10, precition)
+    ) / Math.pow(10, precition)
+}
+
+export const textForTopic = {
+    PRODUCT: 'Product',
+    INV_PRICES: 'Product',
+    ORDERS: 'Order'
+}

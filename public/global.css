@@ -5,22 +5,25 @@
 	--nav-box-color: #112;
 }
 html, body {
+	resize: both;
 	position: relative;
 	width: 550px;
 	height: 500px;
+	box-sizing: border-box;
 }
 body {
 	margin: 0;
 	font-family: Roboto, system-ui, sans-serif;
-	background-color: var(--primary-bg-color);
-	box-sizing: border-box;
+	background-color: var(--primary-bg-color);	
 }
 main {
+	container-type: inline-size;
 	display: flex;
 }
 .main-section {
+	container-type: inline-size;
+	min-width: calc( 100cqw - 81px );
 	padding: 10px;
-	width: 435px;
 }
 strong {
 	color: #777;
@@ -92,17 +95,6 @@ button {
 .error {
 	color:rgb(212, 29, 29);
 }
-@keyframes rotation {
-	from {
-		transform: rotate(0deg);
-	}
-	to {
-		transform: rotate(360deg);
-	}
-}
-.force-queue {
-	margin: 5px 0;
-}
 .add-skues {
 	display: flex;
 	flex-flow: column;
@@ -133,15 +125,18 @@ i {
 aside {
     box-sizing: border-box;
 	width: 61px;
-    height: 500px;
     padding: 20px 0;
     padding-left: 0px;
     background: var(--nav-box-color);
+	top: 0;
+	bottom: 0;
+	position: sticky;
+	min-height: 500px;
 }
 
 .one-article {
 	background-color: var(--secondary-bg-color);
-    width: 108%;
+	margin-bottom: 5px;
     padding: 5px;
     box-sizing: border-box;
 	border-radius: 6px;
@@ -165,4 +160,8 @@ aside {
 
 .list li + .list li {
 	margin-top: 16px;
+}
+.red {
+	color: red;
+	font-weight: bold;
 }

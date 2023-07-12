@@ -16,6 +16,10 @@
     {/each}
 </ul>
 <style>
+    .nav {
+        top: 20px;
+        position: sticky;
+    }
     .nav-label {
 	    font-size: 11px;
     }   

@@ -1,15 +1,32 @@
 {
     "manifest_version": 2,
     "name": "Lole managment",
-    "permissions": ["storage", "*//localhost:3000/*", "tabs" ],
+    "permissions": [
+        "storage",
+        "*//localhost:3000/*",
+        "https://*.myshopify.com/admin/collection*",
+        "tabs",
+        "browserAction",
+        "webRequest",
+        "webRequestBlocking"
+    ],
     "browser_action": {
         "default_popup": "public/index.html"
     },
+    "icons": { 
+        "16": "public/images/L16.png",
+        "48": "public/images/L48.png",
+        "128": "public/images/L128.png"
+    },
     "content_scripts": [{
-        "matches":["https://lole-ca-en.myshopify.com/admin/collections/*"],
-        "run_at": "document_idle",
+        "matches":[
+            "<all_urls>"
+        ],
         "all_frames": true,
         "js":["public/build/injection.js"]
     }],
+    "background": {
+        "service_worker":"public/build/background.js"
+    },
     "version": "1.0.0"
 }

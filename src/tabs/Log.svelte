@@ -25,31 +25,13 @@ async function getProductLog() {
 async function getPriceAndQntyLog() {
     try {
         const response = await get(`${URL}${PRICES_AND_QNTY_LOG}`).then( data => data.json())
-        
-        if (response?.jsonList) {
-            log = response.jsonList.reduce((acc, item) => {
-                for (const webstore of Object.keys(item.inventory)) {
-                    for (const variant of Object.keys(item.inventory[webstore])) {
-                        const cap = item.inventory[webstore][variant].compareAtPrice.toFixed(2) === item.inventory[webstore][variant].price.toFixed(2) ? 
-                                '': 
-                                item.inventory[webstore][variant].compareAtPrice.toFixed(2)
-                        acc.push({
-                            executionTime: item.executionTime,
-                            RT: `${item.runningTime}s`,
-                            webstore,
-                            sku: item.inventory[webstore][variant].sku,
-                            'price/cap': `${item.inventory[webstore][variant].price.toFixed(2)}${cap !== ''?`/${cap}`:''}`,
-                            qty: item.inventory[webstore][variant].quantity,
-                        })
-                    }
-                }
-                return acc
-            }, [])
-
-        }
         if (response == null) {
             throw 'Incorrect response from the server'
         }
+        log = response.jsonList.map(item => {
+            const invParts = item.inventory.split('/')
+            return {...item, inventory: +invParts[0] !== +invParts[1]?`<span class="red">${invParts[0]}</span>/${invParts[1]}`: item.inventory}
+        })
     } catch(e) {
         console.error(e)
     }
@@ -75,7 +57,9 @@ async function getOrderLog() {
             <button on:click={getPriceAndQntyLog} class="btn-main">Price And Qnty Log</button>
         </div>
     </article>
+    {#if log.length>0}        
     <article class="one-article">
         <Grid rows={log} headers={log.length > 0? Object.keys(log[0]): []} />
     </article>
+    {/if}
 </section>
