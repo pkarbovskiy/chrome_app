@@ -1,5 +1,5 @@
 <script>
-import { onMount } from 'svelte';
+import { onDestroy, onMount } from 'svelte';
 import config from '../config.json';
 import Navigation from './components/Navigation.svelte';
 import NotificationsList from './components/NotificationsList.svelte';
@@ -10,41 +10,27 @@ import Product from './tabs/Product.svelte';
 import Setting from './tabs/Setting.svelte';
 const {
     TABS,
-    WS_TOKEN,
-    WS_DOMAIN
 } = config
 let tab = 'product'
 function switchTab(tabName) {
     tab = tabName
 }
 onMount(() => {
-    const socket = new WebSocket(`${WS_DOMAIN}?token=${WS_TOKEN}`);
-
-    // Connection opened
-    socket.addEventListener('open', function (event) {
-        console.log("It's open")
-    });
-
-    // Listen for messages
-    socket.addEventListener('message', function (event) {
-        try {
-            if (event.data !== '--ping--') {
-                chrome.runtime.sendMessage({ action: 'increaseCount' }, response => {
-                    // Process the response received from the background script
-                    const responseData = response.response;
-                })
-                notificationService.update(JSON.parse(event.data))
+    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {   
+        console.log(request)
+        if (request.type === 'ALL_NOTIF') {
+            for (const oneNotif of request.notif) {
+                notificationService.update(oneNotif)
             }
-        } catch (error) {
-            console.error(error)
+            return 
         }
-    });
+        notificationService.update(request)
+    })    
+    chrome.runtime.sendMessage({command:'GET_ALL_STORED_NOTIF'})
 
-    const sendMessage = (message) => {
-        if (socket.readyState <= 1) {
-            socket.send(message)
-        }
-    }
+})
+onDestroy(() => {
+    chrome.runtime.sendMessage({command:'START_STORRING_NOTIF'});
 })
 /* chrome.runtime.onConnect.addListener(function(port) {
     if (port.name == "chrome_app") {

@@ -2,16 +2,19 @@
 import config from '../../config.json';
 import { get, post } from '../common.mjs';
 const {
-    MIDDLEWARE_URL:URL,
+    MIDDLEWARE_URL_ALT:URL,
     ADD_STYLENAMES,
     CURRENTLY_IN_QUEUE,
     ALLOWED_ONLY_FOR_STYLENAME,
-    CURRENTLY_PROCESSING
+    CURRENTLY_PROCESSING,
+    CREATE_COLLECTION,
 } = config
 
 let currentlyProcessing = {}
 let currentlyInQueue = []
 let stylename = ''
+let collectionName = ''
+let stylesForCollection = ''
 /**
  * method to filter everything which is not a stylename based on template
  * @param stylename {[String]} array of skues
@@ -29,6 +32,23 @@ async function getCurrentlyInQueue() {
         }
     } catch(e) {
         console.error(e)
+    }
+}
+async function syncBreadcrumbs() {
+    try {
+        const response = await get(`${URL}${SYNC_BREADCRUMBS}`).then( data => data.json())
+    } catch(error) {
+        console.error(error)
+    }
+}
+async function syncModels() {
+    try {
+        const response = await get(`${URL}${SYNC_MODELS}`).then( data => data.json())
+        if (response == null) {
+            throw 'Incorrect response from the server'
+        }
+    } catch(error) {
+        console.error(error)
     }
 }
 async function getCurrentlyProcessing() {
@@ -52,19 +72,44 @@ async function getCurrentlyProcessing() {
     }
 }
 async function addStylenamesToQueue(extra = '') {
+    let stylenames = []
     if (stylename != '') {
         if (!Array.isArray(stylename)) {
             stylename = stylename.split(',')
         }
         stylename = filterNotCorrectStylenames(stylename)
+        stylenames = stylename.slice(0)
         if (ALLOWED_ONLY_FOR_STYLENAME.split(',').includes(extra)) {
-            stylename = stylename.map(style => `${style}::${extra}`)
+            stylenames = stylenames.map(style => `${style}::${extra}`)
         }
-        if (stylename.length > 0) {
+        if (stylenames.length > 0) {
             try {
-                const response = await post(`${URL}${ADD_STYLENAMES}`,{skues: stylename})
+                const response = await post(`${URL}${ADD_STYLENAMES}`, {skues: stylenames})
 
                 await getCurrentlyProcessing()
+                if (!response.ok) {
+                    throw 'Error has occured'
+                }
+            } catch(e) {
+                console.error(e)
+            }
+        } else {
+            console.error('Provided skues are not correct')
+        }
+    }
+}
+async function createCollection(extra = '') {
+    if (stylesForCollection != '') {
+        if (!Array.isArray(stylesForCollection)) {
+            stylesForCollection = stylesForCollection.split(',')
+        }
+        stylesForCollection = filterNotCorrectStylenames(stylesForCollection)
+
+        if (collectionName !== '' && stylesForCollection.length > 0) {
+
+            try {
+                const response = await post(`${URL}${CREATE_COLLECTION}`, {collectionName, stylesForCollection})
+
                 if (!response.ok) {
                     throw 'Error has occured'
                 }
@@ -109,5 +154,20 @@ async function addStylenamesToQueue(extra = '') {
                 {/each}
             </ul>
         {/if}
+    </article>
+    <article class="currently-processing one-article">
+        <h2>Create Collection</h2>
+        <input type="text" name="" id="collectionName" bind:value="{collectionName}" placeholder="Enter collection name">
+        <input type="text" name="" id="stylesForCollection" bind:value="{stylesForCollection}" placeholder="Enter list of stylenames devided by comma">
+        <div class="buttons">
+            <button on:click={() => createCollection()} class="btn-main">Create</button>
+        </div>
+    </article>
+    <article class="one-article">
+        <h2>Sync Global Data</h2>
+        <div class="buttons">
+            <button on:click={() => syncBreadcrumbs()} class="btn-main">Breadcrumbs</button>
+            <button on:click={() => syncModels()} class="btn-main">Models</button>
+        </div>
     </article>
 </section>

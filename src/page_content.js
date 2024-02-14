@@ -7,34 +7,34 @@ function urlMatchesPattern(url, pattern) {
   const regex = new RegExp(pattern);
   return regex.test(url);
 }
-console.error('hello')
+
 // Function to add the button
 async function addButtonToAppDiv() {
   const stores = config.STORES.split(',')
-//   debugger
+  // debugger
   // Check if the current URL matches the desired pattern
   if (urlMatchesPattern(window.location.href, config.COLLECTION_URL.replace('::stores::',`(${stores.join('|')})`))) {
     // Create the button element
     const button = document.createElement('button');
     button.style= `
-        margin: 50px 20px 0 0; 
-        position: fixed;
-        top: 50px;
-        right: 50px;
-        z-index: 20;
-        border: 0px;
-        background: #14a27a;
-        color: #fff;
-        border-radius:3px;
-        font-weight: 600;
-        cursor: pointer;
-        padding: 5px;
+      margin: 50px 20px 0px 0px;
+      position: fixed;
+      top: 26px;
+      right: 157px;
+      z-index: 20;
+      border: 0px;
+      background: rgb(20, 162, 122);
+      color: rgb(255, 255, 255);
+      border-radius: 3px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 10px;
     `
     button.textContent = 'Sync Category';
 
     // Add click event listener to the button
     button.addEventListener('click', async () => {
-        const store = window.location.host.split('.').shift()
+        const store = window.location.pathname.split('/store/').pop().split('/').shift()
         let collectionId = window.location.pathname.split('/').pop()
         let collections = [collectionId]
         if (collectionId === 'collections') {
@@ -52,7 +52,7 @@ async function addButtonToAppDiv() {
         
         try {
             if (collections.length > 0) {
-                await post(`${config.MIDDLEWARE_URL}${config.COLLECTION_SYNC}`, {collections, store})
+                await post(`${config.MIDDLEWARE_URL}${config.SYNC_COLLECTION}`, {collections, store})
             }
         } catch(e) {
             console.error(e)

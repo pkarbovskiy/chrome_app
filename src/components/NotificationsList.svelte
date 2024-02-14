@@ -4,10 +4,11 @@
     $: notification = $notificationService
     // const notification = {
     //     notifArr:[
-    //     {id: '3cbdf377-ac66-4a9a-a703-e5266c6bdadb', new:true, receivedOn:Date.now(), topic: 'PRODUCT', message: 'LSW4093', type: 'NOTIFICATION', action: 'FINISHED'},
-    //     {id: '4658ed2e-e52c-4e0e-aa13-7b4f091760c7', new:true, receivedOn:Date.now(), topic: 'PRODUCT', message: 'LSW4157', type: 'ERROR', action: 'ERROR'},
-    //     {id: '502688bc-5f20-4add-a1eb-4c1c1729d074', new:true, receivedOn:Date.now(), topic: 'PRODUCT', message: 'LSW3234', type: 'WARNING', action: 'WARNING'},
-    //     {id: '87711bbc-c6ef-4b65-a181-9b43383922fa', new:true, receivedOn:Date.now(), topic: 'PRODUCT', message: 'LSW4137', type: 'NOTIFICATION', action: 'FINISHED'},
+    //     // {id: '3cbdf377-ac66-4a9a-a703-e5266c6bdadb', new:true, receivedOn:Date.now(), topic: 'PRODUCT', message: 'LSW4093', type: 'NOTIFICATION', action: 'FINISHED'},
+    //     // {id: '4658ed2e-e52c-4e0e-aa13-7b4f091760c7', new:true, receivedOn:Date.now(), topic: 'PRODUCT', message: 'LSW4157', type: 'ERROR', action: 'ERROR'},
+    //     // {id: '502688bc-5f20-4add-a1eb-4c1c1729d074', new:true, receivedOn:Date.now(), topic: 'PRODUCT', message: 'LSW3234', type: 'WARNING', action: 'WARNING'},
+    //     // {id: '87711bbc-c6ef-4b65-a181-9b43383922fa', new:true, receivedOn:Date.now(), topic: 'PRODUCT', message: 'LSW4137', type: 'NOTIFICATION', action: 'FINISHED'},
+    //     {"id":"e09807aa-2c18-4fa8-87d9-e1062a5467af", new:true,receivedOn:Date.now(),  "topic":"INV_PRICES","message":"2/2","type":"NOTIFICATION","action":"FINISHED"}
     // ]}
     let toggle = false
     function toggleNotif() {
@@ -18,7 +19,7 @@
 <section class="notifications-list {toggle?'':'hide'}">
     <h2>Notifications</h2>
     <ul>
-        {#each notification.notifArr as one}
+        {#each notification.notifArr.toReversed() as one}
         <li><NotificationItem  notif={one} /></li>
         {/each}
     </ul>
@@ -46,7 +47,7 @@
         --devider-colour: #999;
     }
     .notifications-list > h2 {
-        color: #fff;
+        color: var(--nav-box-color);
         padding-left: 1rem;
     }
     .notifications-list > ul {
@@ -54,6 +55,14 @@
         box-sizing: border-box;
         padding-inline-start: 0;
         width: 100cqw;
+        border-top: 1px #eee solid;
+        border-bottom: 1px #eee solid;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        height: calc( 100cqh - 123px );
+    }
+    .notifications-list > ul::-webkit-scrollbar {
+        display: none;
     }
     .notifications-list > ul > li {
         list-style: none;

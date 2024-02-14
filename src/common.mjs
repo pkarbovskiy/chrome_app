@@ -26,6 +26,6 @@ export function roundThis(number, precition) {
 
 export const textForTopic = {
     PRODUCT: 'Product',
-    INV_PRICES: 'Product',
+    INV_PRICES: 'Inventory',
     ORDERS: 'Order'
 }

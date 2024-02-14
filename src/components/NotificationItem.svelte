@@ -24,7 +24,8 @@
         flex-grow: 2;
     }
     .INV_PRICES {
-        color: #a12a4e;
+        --inventory-color: #5510d4;
+        color: var(--inventory-color);
     }
     .ORDER {
         color: #4ea12a;
@@ -48,6 +49,18 @@
         height: 24px;
         background: #0c6220 no-repeat center/67% url(../images/check.svg);
         border-radius: 30px;
+    }
+    .INV_PRICES.FINISHED::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0px;
+        z-index: 10;
+        width: 2px;
+        height: 46px;
+        border-left: var(--inventory-color) 5px solid;
+        border-radius: 0;
+        background: none;
     }
 
     .FINISHED {        
@@ -100,8 +113,8 @@
     .CONTINUE::before, .START::before {
         content: '';
         position: absolute;
-        top: -5px;
-        left: -32px;
+        top: 8px;
+        left: 6px;
         z-index: 10;
         width: 25px;
         height: 24px;

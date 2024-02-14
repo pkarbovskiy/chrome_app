@@ -6,7 +6,6 @@ function createNotifications() {
     })
     function updateNotification(inNotif) {
         return update(notifObj => {
-            console.log(notifObj)
             const existingNotif = notifObj.notifDic[inNotif.id]
             if (existingNotif != null) {
                 // Update existing notification

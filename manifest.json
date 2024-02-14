@@ -3,10 +3,11 @@
     "name": "Lole managment",
     "permissions": [
         "storage",
-        "*//localhost:3000/*",
-        "https://*.myshopify.com/admin/collection*",
+        "http://localhost:3000/*",
+        "https://localhost:3000/*",
+        "https://admin.shopify.com/store/*/collections*",
+        "*://*/*",
         "tabs",
-        "browserAction",
         "webRequest",
         "webRequestBlocking"
     ],
@@ -28,5 +29,5 @@
     "background": {
         "service_worker":"public/build/background.js"
     },
-    "version": "1.0.0"
+    "version": "2.0.1"
 }
