@@ -2,17 +2,12 @@
     import { notificationService } from '../stores/notificationStore.mjs';
     import NotificationItem from './NotificationItem.svelte';
     $: notification = $notificationService
-    // const notification = {
-    //     notifArr:[
-    //     // {id: '3cbdf377-ac66-4a9a-a703-e5266c6bdadb', new:true, receivedOn:Date.now(), topic: 'PRODUCT', message: 'LSW4093', type: 'NOTIFICATION', action: 'FINISHED'},
-    //     // {id: '4658ed2e-e52c-4e0e-aa13-7b4f091760c7', new:true, receivedOn:Date.now(), topic: 'PRODUCT', message: 'LSW4157', type: 'ERROR', action: 'ERROR'},
-    //     // {id: '502688bc-5f20-4add-a1eb-4c1c1729d074', new:true, receivedOn:Date.now(), topic: 'PRODUCT', message: 'LSW3234', type: 'WARNING', action: 'WARNING'},
-    //     // {id: '87711bbc-c6ef-4b65-a181-9b43383922fa', new:true, receivedOn:Date.now(), topic: 'PRODUCT', message: 'LSW4137', type: 'NOTIFICATION', action: 'FINISHED'},
-    //     {"id":"e09807aa-2c18-4fa8-87d9-e1062a5467af", new:true,receivedOn:Date.now(),  "topic":"INV_PRICES","message":"2/2","type":"NOTIFICATION","action":"FINISHED"}
-    // ]}
     let toggle = false
     function toggleNotif() {
         toggle = !toggle
+    }
+    function resetList() {
+        notification.notifArr = []
     }
 </script>
 <button class="{toggle?'opened':''} notif-toggler" on:click={toggleNotif}></button>
@@ -23,8 +18,12 @@
         <li><NotificationItem  notif={one} /></li>
         {/each}
     </ul>
+    <button class="btn-reset btn-main" on:click={resetList()}>Clean List</button>
 </section>
 <style>
+    .btn-reset {
+        margin: .5rem;
+    }
     .notif-toggler {
         position: absolute;
         z-index: 10;
@@ -37,6 +36,8 @@
     }
     .notifications-list {
         container-type: inline-size;
+        display: flex;
+        flex-flow: column;
         position: absolute;
         top: 15px;
         bottom: 15px;
@@ -48,11 +49,13 @@
     }
     .notifications-list > h2 {
         color: var(--nav-box-color);
-        padding-left: 1rem;
+        padding-left: 0.7rem;
+        margin: 0.7rem 0.5rem;
     }
     .notifications-list > ul {
         container-type: inline-size;
         box-sizing: border-box;
+        margin: 0;
         padding-inline-start: 0;
         width: 100cqw;
         border-top: 1px #eee solid;

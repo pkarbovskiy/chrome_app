@@ -27,5 +27,9 @@ export function roundThis(number, precition) {
 export const textForTopic = {
     PRODUCT: 'Product',
     INV_PRICES: 'Inventory',
-    ORDERS: 'Order'
+    ORDERS: 'Order',
+    COLLECTIONS: 'Collection',
+    S3_IMAGE_SYNC: 'S3_image_sync',
+    SYNC_LISTS: 'Sync_lists',
+    INVOICES: 'Invoice',    
 }

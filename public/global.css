@@ -101,7 +101,6 @@ button {
 }
 .buttons {
 	display: flex;
-    width: 222px;
 }
 button:disabled {
 	color: #999;
@@ -163,4 +162,12 @@ aside {
 .red {
 	color: red;
 	font-weight: bold;
+}
+input[type="checkbox" i] {
+	vertical-align: middle;
+    padding: 0;
+    margin: 0;
+}
+label[for="forceSync"] {
+	padding: 5px 0 0 3px;
 }

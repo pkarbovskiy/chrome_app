@@ -17,7 +17,6 @@ function switchTab(tabName) {
 }
 onMount(() => {
     chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {   
-        console.log(request)
         if (request.type === 'ALL_NOTIF') {
             for (const oneNotif of request.notif) {
                 notificationService.update(oneNotif)

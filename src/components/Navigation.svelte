@@ -22,8 +22,7 @@
     }
     .nav-label {
 	    font-size: 11px;
-    }   
-
+    }
     ul.nav {
         display:flex;
         flex-flow: column;

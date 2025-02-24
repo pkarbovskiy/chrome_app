@@ -8,66 +8,66 @@ function urlMatchesPattern(url, pattern) {
   return regex.test(url);
 }
 
-// Function to add the button
-async function addButtonToAppDiv() {
-  const stores = config.STORES.split(',')
-  // debugger
-  // Check if the current URL matches the desired pattern
-  if (urlMatchesPattern(window.location.href, config.COLLECTION_URL.replace('::stores::',`(${stores.join('|')})`))) {
-    // Create the button element
-    const button = document.createElement('button');
-    button.style= `
-      margin: 50px 20px 0px 0px;
-      position: fixed;
-      top: 26px;
-      right: 157px;
-      z-index: 20;
-      border: 0px;
-      background: rgb(20, 162, 122);
-      color: rgb(255, 255, 255);
-      border-radius: 3px;
-      font-weight: 600;
-      cursor: pointer;
-      padding: 10px;
-    `
-    button.textContent = 'Sync Category';
+// // Function to add the button
+// async function addButtonToAppDiv() {
+//   const stores = config.STORES.split(',')
+//   // debugger
+//   // Check if the current URL matches the desired pattern
+//   if (urlMatchesPattern(window.location.href, config.COLLECTION_URL.replace('::stores::',`(${stores.join('|')})`))) {
+//     // Create the button element
+//     const button = document.createElement('button');
+//     button.style= `
+//       margin: 50px 20px 0px 0px;
+//       position: fixed;
+//       top: 26px;
+//       right: 157px;
+//       z-index: 20;
+//       border: 0px;
+//       background: rgb(20, 162, 122);
+//       color: rgb(255, 255, 255);
+//       border-radius: 3px;
+//       font-weight: 600;
+//       cursor: pointer;
+//       padding: 10px;
+//     `
+//     button.textContent = 'Sync Category';
 
-    // Add click event listener to the button
-    button.addEventListener('click', async () => {
-        const store = window.location.pathname.split('/store/').pop().split('/').shift()
-        let collectionId = window.location.pathname.split('/').pop()
-        let collections = [collectionId]
-        if (collectionId === 'collections') {
-            collections = []
-            const checkedCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked')
-            if (checkedCheckboxes.length > 0) {
-                for (const oneCheckbox of checkedCheckboxes) {
-                    if (oneCheckbox?.id?.indexOf('gid://shopify/Collection/')===0) {
-                        collections.push(oneCheckbox.id.split('/').pop())
-                    }
-                }        
+//     // Add click event listener to the button
+//     button.addEventListener('click', async () => {
+//         const store = window.location.pathname.split('/store/').pop().split('/').shift()
+//         let collectionId = window.location.pathname.split('/').pop()
+//         let collections = [collectionId]
+//         if (collectionId === 'collections') {
+//             collections = []
+//             const checkedCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked')
+//             if (checkedCheckboxes.length > 0) {
+//                 for (const oneCheckbox of checkedCheckboxes) {
+//                     if (oneCheckbox?.id?.indexOf('gid://shopify/Collection/')===0) {
+//                         collections.push(oneCheckbox.id.split('/').pop())
+//                     }
+//                 }        
                 
-            }
-        }
+//             }
+//         }
         
-        try {
-            if (collections.length > 0) {
-                await post(`${config.MIDDLEWARE_URL}${config.SYNC_COLLECTION}`, {collections, store})
-            }
-        } catch(e) {
-            console.error(e)
-        }
+//         try {
+//             if (collections.length > 0) {
+//                 await post(`${config.MIDDLEWARE_URL}${config.SYNC_COLLECTION}`, {collections, store})
+//             }
+//         } catch(e) {
+//             console.error(e)
+//         }
 
-    })
+//     })
 
-    // Find the div with ID "app"
-    const appDiv = document.getElementById('app');
-    if (appDiv) {
-      appDiv.appendChild(button);
-    }
-  }
-}
-addButtonToAppDiv()
+//     // Find the div with ID "app"
+//     const appDiv = document.getElementById('app');
+//     if (appDiv) {
+//       appDiv.appendChild(button);
+//     }
+//   }
+// }
+// addButtonToAppDiv()
 // Call the addButtonToAppDiv function when the DOM is ready
 // document.addEventListener('DOMContentLoaded', addButtonToAppDiv)
 /* 
